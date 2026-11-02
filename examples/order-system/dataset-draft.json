@@ -1,0 +1,164 @@
+{
+  "kind": "dataset",
+  "name": "订单基础评测",
+  "product": "模拟订单系统",
+  "version": "v1.0",
+  "content": [
+    {
+      "id": "order-001",
+      "question": "已发货订单能取消吗？",
+      "reference": "已发货订单不支持取消。",
+      "type": "状态规则",
+      "should_refuse": false,
+      "required": [
+        "不支持取消"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "使用手册.md",
+          "text": "已发货订单不支持取消。"
+        }
+      ],
+      "approved": false
+    },
+    {
+      "id": "order-002",
+      "question": "待支付订单多久自动关闭？",
+      "reference": "30分钟未支付自动关闭。",
+      "type": "边界条件",
+      "should_refuse": false,
+      "required": [
+        "30分钟"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "使用手册.md",
+          "text": "待支付订单30分钟未支付自动关闭。"
+        }
+      ],
+      "approved": false
+    },
+    {
+      "id": "order-003",
+      "question": "退款保证实时到账吗？",
+      "reference": "不保证，通常3个工作日内到账。",
+      "type": "时限规则",
+      "should_refuse": false,
+      "required": [
+        "3个工作日"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "使用手册.md",
+          "text": "退款通常在3个工作日内到账，不承诺实时到账。"
+        }
+      ],
+      "approved": false
+    },
+    {
+      "id": "order-004",
+      "question": "普通用户可以查看别人的订单吗？",
+      "reference": "不能，普通用户只能查询本人订单。",
+      "type": "权限规则",
+      "should_refuse": false,
+      "required": [
+        "本人订单"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "接口说明.md",
+          "text": "普通用户只能查询本人订单，否则返回403。"
+        }
+      ],
+      "approved": false
+    },
+    {
+      "id": "order-005",
+      "question": "取消已发货订单接口返回什么状态码？",
+      "reference": "返回409。",
+      "type": "接口规则",
+      "should_refuse": false,
+      "required": [
+        "409"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "接口说明.md",
+          "text": "已发货或已完成返回409"
+        }
+      ],
+      "approved": false
+    },
+    {
+      "id": "order-006",
+      "question": "重复取消已取消订单会怎样？",
+      "reference": "返回200，保持幂等。",
+      "type": "边界条件",
+      "should_refuse": false,
+      "required": [
+        "200"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "接口说明.md",
+          "text": "重复取消已取消订单返回200，保持幂等。"
+        }
+      ],
+      "approved": false
+    },
+    {
+      "id": "order-007",
+      "question": "客服能修改订单实付金额吗？",
+      "reference": "不能修改订单实付金额。",
+      "type": "权限规则",
+      "should_refuse": false,
+      "required": [
+        "不能修改"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "权限规则.md",
+          "text": "客服可查询用户订单和处理售后，但不能修改订单实付金额。"
+        }
+      ],
+      "approved": false
+    },
+    {
+      "id": "order-008",
+      "question": "管理员能直接取消已发货订单吗？",
+      "reference": "不能，管理员不豁免状态限制。",
+      "type": "多条件",
+      "should_refuse": false,
+      "required": [
+        "不豁免"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "权限规则.md",
+          "text": "管理员角色不豁免订单状态限制。"
+        }
+      ],
+      "approved": false
+    },
+    {
+      "id": "order-009",
+      "question": "系统采用哪家物流公司的年度报价？",
+      "reference": "资料未提供，应该拒答。",
+      "type": "知识库外",
+      "should_refuse": true,
+      "required": [],
+      "forbidden": [],
+      "evidence": [],
+      "approved": false
+    }
+  ],
+  "settings": {}
+}

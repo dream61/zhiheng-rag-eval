@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [{
+    "name": "启动评测后端",
+    "type": "debugpy",
+    "request": "launch",
+    "program": "${workspaceFolder}/backend/manage.py",
+    "args": ["runserver", "127.0.0.1:8000"],
+    "django": true,
+    "cwd": "${workspaceFolder}/backend"
+  }]
+}
