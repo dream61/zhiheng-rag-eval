@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Asset, Experiment, Result, Review
+from .models import Asset, Experiment, Result, Review, SampleApproval, ExecutionAttempt, IndexJob, RegressionMembership, ChatRecord
 
 class ReadOnlyBusinessAdmin(admin.ModelAdmin):
     """业务记录统一通过API修改，管理后台只读。"""
@@ -10,5 +10,5 @@ class ReadOnlyBusinessAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return False
 
-for model in (Asset, Experiment, Result, Review):
+for model in (Asset, Experiment, Result, Review, SampleApproval, ExecutionAttempt, IndexJob, RegressionMembership, ChatRecord):
     admin.site.register(model, ReadOnlyBusinessAdmin)

@@ -6,24 +6,492 @@
   "content": [
     {
       "id": "order-001",
-      "question": "已发货订单能取消吗？",
-      "reference": "已发货订单不支持取消。",
-      "type": "状态规则",
+      "question": "订单有哪些状态？",
+      "reference": "待支付、待发货、已发货、已完成。",
+      "type": "正常问答",
       "should_refuse": false,
       "required": [
-        "不支持取消"
+        "待支付",
+        "待发货",
+        "已发货",
+        "已完成"
       ],
       "forbidden": [],
       "evidence": [
         {
           "document": "使用手册.md",
-          "text": "已发货订单不支持取消。"
+          "text": "订单状态依次为待支付、待发货、已发货、已完成。",
+          "start": 25,
+          "end": 48
         }
       ],
-      "approved": false
+      "approved": false,
+      "product_version": "v1.0"
     },
     {
       "id": "order-002",
+      "question": "创建订单最少需要几件商品？",
+      "reference": "至少一件商品。",
+      "type": "正常问答",
+      "should_refuse": false,
+      "required": [
+        "至少一件"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "使用手册.md",
+          "text": "创建订单必须包含至少一件商品。",
+          "start": 48,
+          "end": 63
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-003",
+      "question": "订单金额使用什么币种？",
+      "reference": "人民币。",
+      "type": "正常问答",
+      "should_refuse": false,
+      "required": [
+        "人民币"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "使用手册.md",
+          "text": "订单金额使用人民币，精确到分。",
+          "start": 96,
+          "end": 111
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-004",
+      "question": "订单金额精确到什么单位？",
+      "reference": "精确到分。",
+      "type": "正常问答",
+      "should_refuse": false,
+      "required": [
+        "分"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "使用手册.md",
+          "text": "订单金额使用人民币，精确到分。",
+          "start": 96,
+          "end": 111
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-005",
+      "question": "支付成功后订单是什么状态？",
+      "reference": "待发货。",
+      "type": "正常问答",
+      "should_refuse": false,
+      "required": [
+        "待发货"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "使用手册.md",
+          "text": "支付成功后进入待发货状态。",
+          "start": 139,
+          "end": 152
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-006",
+      "question": "用户确认收货后变为什么状态？",
+      "reference": "已完成。",
+      "type": "正常问答",
+      "should_refuse": false,
+      "required": [
+        "已完成"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "使用手册.md",
+          "text": "用户确认收货后订单变为已完成。",
+          "start": 329,
+          "end": 344
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-007",
+      "question": "取消成功会释放库存吗？",
+      "reference": "会释放已占用库存。",
+      "type": "正常问答",
+      "should_refuse": false,
+      "required": [
+        "释放"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "使用手册.md",
+          "text": "取消成功会释放已占用的库存。",
+          "start": 275,
+          "end": 289
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-008",
+      "question": "查询订单使用什么接口？",
+      "reference": "GET /api/orders/{id}。",
+      "type": "正常问答",
+      "should_refuse": false,
+      "required": [
+        "GET /api/orders"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "接口说明.md",
+          "text": "GET /api/orders/{id} 查询订单。",
+          "start": 21,
+          "end": 47
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-009",
+      "question": "创建订单使用什么HTTP方法？",
+      "reference": "POST。",
+      "type": "正常问答",
+      "should_refuse": false,
+      "required": [
+        "POST"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "接口说明.md",
+          "text": "POST /api/orders创建订单。",
+          "start": 150,
+          "end": 171
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-010",
+      "question": "创建订单成功返回什么状态码？",
+      "reference": "201。",
+      "type": "正常问答",
+      "should_refuse": false,
+      "required": [
+        "201"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "接口说明.md",
+          "text": "创建成功返回201。",
+          "start": 221,
+          "end": 231
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-011",
+      "question": "取消订单成功返回什么状态码？",
+      "reference": "200。",
+      "type": "正常问答",
+      "should_refuse": false,
+      "required": [
+        "200"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "接口说明.md",
+          "text": "取消成功返回200。",
+          "start": 284,
+          "end": 294
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-012",
+      "question": "取消接口请求体包含什么字段？",
+      "reference": "reason。",
+      "type": "正常问答",
+      "should_refuse": false,
+      "required": [
+        "reason"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "接口说明.md",
+          "text": "请求体包含reason。",
+          "start": 272,
+          "end": 284
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-013",
+      "question": "普通用户可以查看他人订单吗？",
+      "reference": "不可以，只能查看自己的订单。",
+      "type": "权限规则",
+      "should_refuse": false,
+      "required": [
+        "自己"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "权限规则.md",
+          "text": "普通用户仅可查看和管理自己的订单。",
+          "start": 13,
+          "end": 30
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-014",
+      "question": "客服可以修改实付金额吗？",
+      "reference": "不能修改订单实付金额。",
+      "type": "权限规则",
+      "should_refuse": false,
+      "required": [
+        "不能修改"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "权限规则.md",
+          "text": "客服可查询用户订单和处理售后，但不能修改订单实付金额。",
+          "start": 30,
+          "end": 57
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-015",
+      "question": "谁可以查看全部订单？",
+      "reference": "运营管理员。",
+      "type": "权限规则",
+      "should_refuse": false,
+      "required": [
+        "运营管理员"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "权限规则.md",
+          "text": "运营管理员可查看全部订单。",
+          "start": 57,
+          "end": 70
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-016",
+      "question": "客服可以处理售后吗？",
+      "reference": "可以处理售后。",
+      "type": "权限规则",
+      "should_refuse": false,
+      "required": [
+        "处理售后"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "权限规则.md",
+          "text": "客服可查询用户订单和处理售后，但不能修改订单实付金额。",
+          "start": 30,
+          "end": 57
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-017",
+      "question": "谁有发货权限？",
+      "reference": "仓库管理员。",
+      "type": "权限规则",
+      "should_refuse": false,
+      "required": [
+        "仓库管理员"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "权限规则.md",
+          "text": "发货操作仅允许仓库管理员执行。",
+          "start": 102,
+          "end": 117
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-018",
+      "question": "普通用户有发货权限吗？",
+      "reference": "没有发货权限。",
+      "type": "权限规则",
+      "should_refuse": false,
+      "required": [
+        "无发货权限"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "权限规则.md",
+          "text": "普通用户和客服均无发货权限。",
+          "start": 117,
+          "end": 131
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-019",
+      "question": "客服有发货权限吗？",
+      "reference": "没有发货权限。",
+      "type": "权限规则",
+      "should_refuse": false,
+      "required": [
+        "无发货权限"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "权限规则.md",
+          "text": "普通用户和客服均无发货权限。",
+          "start": 117,
+          "end": 131
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-020",
+      "question": "支付回调使用普通用户角色授权吗？",
+      "reference": "不使用，系统通过验签处理。",
+      "type": "权限规则",
+      "should_refuse": false,
+      "required": [
+        "验签"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "权限规则.md",
+          "text": "支付回调由系统验签处理，不使用普通用户角色授权。",
+          "start": 131,
+          "end": 155
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-021",
+      "question": "商品数量为0能下单吗？",
+      "reference": "不能，数量须为1到99的整数。",
+      "type": "边界条件",
+      "should_refuse": false,
+      "required": [
+        "1到99"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "使用手册.md",
+          "text": "商品购买数量必须为1到99的整数。",
+          "start": 63,
+          "end": 80
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-022",
+      "question": "商品数量为100能下单吗？",
+      "reference": "不能，数量最大99。",
+      "type": "边界条件",
+      "should_refuse": false,
+      "required": [
+        "99"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "使用手册.md",
+          "text": "商品购买数量必须为1到99的整数。",
+          "start": 63,
+          "end": 80
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-023",
+      "question": "商品数量为1.5是否合法？",
+      "reference": "不合法，数量必须为整数。",
+      "type": "边界条件",
+      "should_refuse": false,
+      "required": [
+        "整数"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "使用手册.md",
+          "text": "商品购买数量必须为1到99的整数。",
+          "start": 63,
+          "end": 80
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-024",
       "question": "待支付订单多久自动关闭？",
       "reference": "30分钟未支付自动关闭。",
       "type": "边界条件",
@@ -35,69 +503,39 @@
       "evidence": [
         {
           "document": "使用手册.md",
-          "text": "待支付订单30分钟未支付自动关闭。"
+          "text": "待支付订单30分钟未支付自动关闭。",
+          "start": 122,
+          "end": 139
         }
       ],
-      "approved": false
+      "approved": false,
+      "product_version": "v1.0"
     },
     {
-      "id": "order-003",
-      "question": "退款保证实时到账吗？",
-      "reference": "不保证，通常3个工作日内到账。",
-      "type": "时限规则",
+      "id": "order-025",
+      "question": "已关闭订单还能继续支付吗？",
+      "reference": "不支持继续支付，需要重新下单。",
+      "type": "边界条件",
       "should_refuse": false,
       "required": [
-        "3个工作日"
+        "重新下单"
       ],
       "forbidden": [],
       "evidence": [
         {
           "document": "使用手册.md",
-          "text": "退款通常在3个工作日内到账，不承诺实时到账。"
+          "text": "已关闭订单不支持继续支付，用户需要重新下单。",
+          "start": 152,
+          "end": 174
         }
       ],
-      "approved": false
+      "approved": false,
+      "product_version": "v1.0"
     },
     {
-      "id": "order-004",
-      "question": "普通用户可以查看别人的订单吗？",
-      "reference": "不能，普通用户只能查询本人订单。",
-      "type": "权限规则",
-      "should_refuse": false,
-      "required": [
-        "本人订单"
-      ],
-      "forbidden": [],
-      "evidence": [
-        {
-          "document": "接口说明.md",
-          "text": "普通用户只能查询本人订单，否则返回403。"
-        }
-      ],
-      "approved": false
-    },
-    {
-      "id": "order-005",
-      "question": "取消已发货订单接口返回什么状态码？",
-      "reference": "返回409。",
-      "type": "接口规则",
-      "should_refuse": false,
-      "required": [
-        "409"
-      ],
-      "forbidden": [],
-      "evidence": [
-        {
-          "document": "接口说明.md",
-          "text": "已发货或已完成返回409"
-        }
-      ],
-      "approved": false
-    },
-    {
-      "id": "order-006",
-      "question": "重复取消已取消订单会怎样？",
-      "reference": "返回200，保持幂等。",
+      "id": "order-026",
+      "question": "重复取消已取消订单返回什么？",
+      "reference": "返回200并保持幂等。",
       "type": "边界条件",
       "should_refuse": false,
       "required": [
@@ -107,16 +545,131 @@
       "evidence": [
         {
           "document": "接口说明.md",
-          "text": "重复取消已取消订单返回200，保持幂等。"
+          "text": "重复取消已取消订单返回200，保持幂等。",
+          "start": 311,
+          "end": 331
         }
       ],
-      "approved": false
+      "approved": false,
+      "product_version": "v1.0"
     },
     {
-      "id": "order-007",
-      "question": "客服能修改订单实付金额吗？",
-      "reference": "不能修改订单实付金额。",
-      "type": "权限规则",
+      "id": "order-027",
+      "question": "查询不存在的订单返回什么？",
+      "reference": "404。",
+      "type": "边界条件",
+      "should_refuse": false,
+      "required": [
+        "404"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "接口说明.md",
+          "text": "不存在的订单返回404。",
+          "start": 79,
+          "end": 91
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-028",
+      "question": "库存不足时会生成订单吗？",
+      "reference": "不会，下单失败且不生成订单。",
+      "type": "边界条件",
+      "should_refuse": false,
+      "required": [
+        "不生成订单"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "使用手册.md",
+          "text": "库存不足时下单失败，不生成订单。",
+          "start": 80,
+          "end": 96
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-029",
+      "question": "本人待支付订单可以取消吗？",
+      "reference": "可以由本人取消。",
+      "type": "多条件问题",
+      "should_refuse": false,
+      "required": [
+        "本人取消"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "使用手册.md",
+          "text": "待支付订单可由本人取消。",
+          "start": 200,
+          "end": 212
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-030",
+      "question": "本人待发货订单取消后如何退款？",
+      "reference": "允许取消，原路退款。",
+      "type": "多条件问题",
+      "should_refuse": false,
+      "required": [
+        "原路退款"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "使用手册.md",
+          "text": "待发货订单允许本人取消，取消后原路退款。",
+          "start": 212,
+          "end": 232
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-031",
+      "question": "已发货订单可以直接取消还是需要售后？",
+      "reference": "不支持取消，需要收货后申请售后。",
+      "type": "多条件问题",
+      "should_refuse": false,
+      "required": [
+        "不支持取消",
+        "售后"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "使用手册.md",
+          "text": "已发货订单不支持取消。",
+          "start": 232,
+          "end": 243
+        },
+        {
+          "document": "使用手册.md",
+          "text": "已发货订单需要收货后申请售后。",
+          "start": 314,
+          "end": 329
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-032",
+      "question": "已发货订单还能修改收货地址吗？",
+      "reference": "不能修改收货地址。",
+      "type": "多条件问题",
       "should_refuse": false,
       "required": [
         "不能修改"
@@ -124,40 +677,415 @@
       "forbidden": [],
       "evidence": [
         {
-          "document": "权限规则.md",
-          "text": "客服可查询用户订单和处理售后，但不能修改订单实付金额。"
+          "document": "使用手册.md",
+          "text": "订单发货后不能修改收货地址。",
+          "start": 344,
+          "end": 358
         }
       ],
-      "approved": false
+      "approved": false,
+      "product_version": "v1.0"
     },
     {
-      "id": "order-008",
-      "question": "管理员能直接取消已发货订单吗？",
-      "reference": "不能，管理员不豁免状态限制。",
-      "type": "多条件",
+      "id": "order-033",
+      "question": "待发货订单本人可以修改地址吗？",
+      "reference": "允许本人修改。",
+      "type": "多条件问题",
       "should_refuse": false,
       "required": [
+        "本人修改"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "使用手册.md",
+          "text": "待发货订单允许本人修改收货地址。",
+          "start": 358,
+          "end": 374
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-034",
+      "question": "重复有效支付回调会再次改变状态吗？",
+      "reference": "返回200，不重复改变状态。",
+      "type": "多条件问题",
+      "should_refuse": false,
+      "required": [
+        "200",
+        "不重复"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "接口说明.md",
+          "text": "重复有效回调返回200，不重复改变订单状态。",
+          "start": 427,
+          "end": 449
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-035",
+      "question": "管理员能取消已发货订单吗，取消接口返回什么？",
+      "reference": "不能，状态限制不豁免，接口返回409。",
+      "type": "跨文档问题",
+      "should_refuse": false,
+      "required": [
+        "409",
         "不豁免"
       ],
       "forbidden": [],
       "evidence": [
         {
           "document": "权限规则.md",
-          "text": "管理员角色不豁免订单状态限制。"
+          "text": "管理员角色不豁免订单状态限制。",
+          "start": 87,
+          "end": 102
+        },
+        {
+          "document": "接口说明.md",
+          "text": "已发货或已完成订单取消返回409。",
+          "start": 294,
+          "end": 311
         }
       ],
-      "approved": false
+      "approved": false,
+      "product_version": "v1.0"
     },
     {
-      "id": "order-009",
-      "question": "系统采用哪家物流公司的年度报价？",
-      "reference": "资料未提供，应该拒答。",
+      "id": "order-036",
+      "question": "未登录查询订单与越权查询分别返回什么？",
+      "reference": "未登录401，越权403。",
+      "type": "跨文档问题",
+      "should_refuse": false,
+      "required": [
+        "401",
+        "403"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "接口说明.md",
+          "text": "查询需要登录，未登录返回401。",
+          "start": 47,
+          "end": 63
+        },
+        {
+          "document": "接口说明.md",
+          "text": "普通用户查询他人订单返回403。",
+          "start": 63,
+          "end": 79
+        },
+        {
+          "document": "权限规则.md",
+          "text": "普通用户仅可查看和管理自己的订单。",
+          "start": 13,
+          "end": 30
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-037",
+      "question": "库存不足时创建接口返回什么，会生成订单吗？",
+      "reference": "返回409，不生成订单。",
+      "type": "跨文档问题",
+      "should_refuse": false,
+      "required": [
+        "409",
+        "不生成订单"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "使用手册.md",
+          "text": "库存不足时下单失败，不生成订单。",
+          "start": 80,
+          "end": 96
+        },
+        {
+          "document": "接口说明.md",
+          "text": "库存不足返回409。",
+          "start": 211,
+          "end": 221
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-038",
+      "question": "普通用户能发货吗，支付成功是否就能由本人发货？",
+      "reference": "不能，只有仓库管理员有发货权限，支付成功是订单可发货的前提。",
+      "type": "跨文档问题",
+      "should_refuse": false,
+      "required": [
+        "仓库管理员",
+        "支付成功"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "使用手册.md",
+          "text": "只有支付成功的订单才能发货。",
+          "start": 300,
+          "end": 314
+        },
+        {
+          "document": "权限规则.md",
+          "text": "发货操作仅允许仓库管理员执行。",
+          "start": 102,
+          "end": 117
+        },
+        {
+          "document": "权限规则.md",
+          "text": "普通用户和客服均无发货权限。",
+          "start": 117,
+          "end": 131
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-039",
+      "question": "取消待发货订单后资金怎么退，多久到账？",
+      "reference": "原路退款，通常3个工作日内到账。",
+      "type": "跨文档问题",
+      "should_refuse": false,
+      "required": [
+        "原路退款",
+        "3个工作日"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "使用手册.md",
+          "text": "待发货订单允许本人取消，取消后原路退款。",
+          "start": 212,
+          "end": 232
+        },
+        {
+          "document": "使用手册.md",
+          "text": "退款通常在3个工作日内到账，不承诺实时到账。",
+          "start": 253,
+          "end": 275
+        },
+        {
+          "document": "接口说明.md",
+          "text": "取消成功返回200。",
+          "start": 284,
+          "end": 294
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-040",
+      "question": "普通用户取消他人订单是否会因待支付而放行？",
+      "reference": "不会，用户只能管理自己订单，越权取消返回403。",
+      "type": "跨文档问题",
+      "should_refuse": false,
+      "required": [
+        "403",
+        "自己"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "权限规则.md",
+          "text": "普通用户仅可查看和管理自己的订单。",
+          "start": 13,
+          "end": 30
+        },
+        {
+          "document": "接口说明.md",
+          "text": "越权取消他人订单返回403。",
+          "start": 331,
+          "end": 345
+        }
+      ],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-041",
+      "question": "V1.0打包中的待发货订单有新增取消限制吗？",
+      "reference": "没有，V1.0没有打包状态限制。",
+      "type": "版本差异",
+      "should_refuse": false,
+      "required": [
+        "没有打包状态限制"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "版本更新说明.md",
+          "text": "V1.0待发货订单允许本人取消，没有打包状态限制。",
+          "start": 20,
+          "end": 45
+        }
+      ],
+      "approved": false,
+      "product_version": "跨版本"
+    },
+    {
+      "id": "order-042",
+      "question": "V1.1打包中的待发货订单能由本人直接取消吗？",
+      "reference": "不能直接取消，需要联系客服。",
+      "type": "版本差异",
+      "should_refuse": false,
+      "required": [
+        "联系客服"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "版本更新说明.md",
+          "text": "V1.1待发货且已进入打包流程的订单，不再允许用户直接取消，需要联系客服处理。",
+          "start": 80,
+          "end": 119
+        }
+      ],
+      "approved": false,
+      "product_version": "跨版本"
+    },
+    {
+      "id": "order-043",
+      "question": "V1.1未打包的待发货订单可以取消吗？",
+      "reference": "仍允许本人取消。",
+      "type": "版本差异",
+      "should_refuse": false,
+      "required": [
+        "本人取消"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "版本更新说明.md",
+          "text": "V1.1未打包的待发货订单仍允许本人取消。",
+          "start": 119,
+          "end": 140
+        }
+      ],
+      "approved": false,
+      "product_version": "跨版本"
+    },
+    {
+      "id": "order-044",
+      "question": "V1.1已发货订单的取消规则改变了吗？",
+      "reference": "仍不支持取消。",
+      "type": "版本差异",
+      "should_refuse": false,
+      "required": [
+        "不支持取消"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "版本更新说明.md",
+          "text": "V1.1已发货订单仍不支持取消。",
+          "start": 140,
+          "end": 156
+        }
+      ],
+      "approved": false,
+      "product_version": "跨版本"
+    },
+    {
+      "id": "order-045",
+      "question": "V1.0与V1.1的列表page_size上限分别是多少？",
+      "reference": "V1.0为100，V1.1为50。",
+      "type": "版本差异",
+      "should_refuse": false,
+      "required": [
+        "100",
+        "50"
+      ],
+      "forbidden": [],
+      "evidence": [
+        {
+          "document": "版本更新说明.md",
+          "text": "V1.0订单列表page_size最大100。",
+          "start": 45,
+          "end": 68
+        },
+        {
+          "document": "版本更新说明.md",
+          "text": "V1.1订单列表page_size最大50。",
+          "start": 156,
+          "end": 178
+        }
+      ],
+      "approved": false,
+      "product_version": "跨版本"
+    },
+    {
+      "id": "order-046",
+      "question": "公司今年的物流年度报价是多少？",
+      "reference": "资料未提供相关信息，应拒答。",
       "type": "知识库外",
       "should_refuse": true,
       "required": [],
       "forbidden": [],
       "evidence": [],
-      "approved": false
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-047",
+      "question": "订单系统的数据库root密码是什么？",
+      "reference": "资料未提供相关信息，应拒答。",
+      "type": "知识库外",
+      "should_refuse": true,
+      "required": [],
+      "forbidden": [],
+      "evidence": [],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-048",
+      "question": "下周杭州天气怎么样？",
+      "reference": "资料未提供相关信息，应拒答。",
+      "type": "知识库外",
+      "should_refuse": true,
+      "required": [],
+      "forbidden": [],
+      "evidence": [],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-049",
+      "question": "系统使用的真实客户手机号是什么？",
+      "reference": "资料未提供相关信息，应拒答。",
+      "type": "知识库外",
+      "should_refuse": true,
+      "required": [],
+      "forbidden": [],
+      "evidence": [],
+      "approved": false,
+      "product_version": "v1.0"
+    },
+    {
+      "id": "order-050",
+      "question": "平台明年的股票投资建议是什么？",
+      "reference": "资料未提供相关信息，应拒答。",
+      "type": "知识库外",
+      "should_refuse": true,
+      "required": [],
+      "forbidden": [],
+      "evidence": [],
+      "approved": false,
+      "product_version": "v1.0"
     }
   ],
   "settings": {}
