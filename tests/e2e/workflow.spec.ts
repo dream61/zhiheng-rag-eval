@@ -19,7 +19,12 @@ test('审核、批量实验、复核归因、对比与回归闭环',async({page,
  await expect(page.getByText('已审核 · 已发货订单能取消吗？',{exact:false})).toBeAttached();
  await page.getByRole('row').filter({hasText:'界面测试数据集'}).getByRole('button',{name:'发布',exact:true}).click();
  await expect(page.getByRole('row').filter({hasText:'界面测试数据集'}).getByText('已冻结')).toBeVisible();
+ await page.getByRole('button',{name:'问答调试',exact:true}).click();
+ await expect(page.getByRole('button',{name:'执行问答',exact:true})).toBeDisabled();
+ await expect(page.getByRole('button',{name:'执行问答',exact:true})).toHaveCSS('cursor','not-allowed');
+ await expect(page.getByText('请先选择已发布的知识库版本；若列表为空，请到知识资产中发布知识库。')).toBeVisible();
  await page.getByRole('button',{name:'评测实验',exact:true}).click();
+ await expect(page.getByRole('button',{name:'提交实验',exact:true})).toHaveCSS('cursor','not-allowed');
  await page.getByLabel('知识库版本').selectOption(String(kb.id));await page.getByLabel('评测集版本').selectOption(String(ds.id));
  await page.getByRole('button',{name:'提交实验',exact:true}).click();
  await expect(page.getByRole('heading',{name:'逐条结果 · 1 条'})).toBeVisible();
@@ -33,7 +38,25 @@ test('审核、批量实验、复核归因、对比与回归闭环',async({page,
  const items=await (await request.get(base+`experiments/${candidate.id}/results/`,{headers})).json();
  await post('reviews/',{result:items.results[0].id,passed:true,reason:'夹具模拟修复后复核',attribution:''});
  await page.getByRole('button',{name:'刷新数据',exact:true}).click();await page.getByRole('button',{name:'实验对比',exact:true}).click();
- await page.getByLabel('基线实验',{exact:true}).selectOption(String(first.id));await page.getByLabel('候选实验',{exact:true}).selectOption(String(candidate.id));await page.getByRole('button',{name:'生成对比报告'}).click();
+ await expect(page.getByRole('button',{name:'生成对比报告'})).toHaveCSS('cursor','not-allowed');
+ await page.getByLabel('基线实验',{exact:true}).selectOption(String(first.id));
+ await page.getByLabel('候选实验',{exact:true}).selectOption(String(first.id));
+ await expect(page.getByText('请选择两组不同的实验。')).toBeVisible();
+ await expect(page.getByRole('button',{name:'生成对比报告'})).toBeDisabled();
+ await page.getByLabel('候选实验',{exact:true}).selectOption(String(candidate.id));
+ // 暂缓响应，验证只有实际请求期间显示等待状态并阻止重复提交。
+ let release!:()=>void;const gate=new Promise<void>(resolve=>{release=resolve});
+ await page.route('**/compare/?other=*',async route=>{await gate;await route.continue()},{times:1});
+ await page.getByRole('button',{name:'生成对比报告'}).click();
+ try {
+  await expect(page.getByRole('button',{name:'正在生成对比报告…'})).toBeDisabled();
+  await expect(page.getByRole('button',{name:'正在生成对比报告…'})).toHaveCSS('cursor','wait');
+ } finally {release()}
  await expect(page.getByRole('button',{name:/ui-001 · 已修复/})).toBeVisible();
+ await expect(page.getByRole('button',{name:'生成对比报告'})).toBeEnabled();
+ await page.route('**/compare/?other=*',route=>route.fulfill({status:503,contentType:'application/json',body:JSON.stringify({detail:'模拟服务暂不可用'})}),{times:1});
+ await page.getByRole('button',{name:'生成对比报告'}).click();
+ await expect(page.getByRole('alert')).toContainText('模拟服务暂不可用');
+ await expect(page.getByRole('button',{name:'生成对比报告'})).toBeEnabled();
  await page.getByRole('button',{name:'回归集',exact:true}).click();await expect(page.getByText('明确不支持取消',{exact:true})).toBeVisible();
 });
