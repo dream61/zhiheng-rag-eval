@@ -1,0 +1,90 @@
+name: 自动化测试
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    name: 后端、前端与界面测试
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      DB_ENGINE: sqlite
+      CELERY_TASK_ALWAYS_EAGER: '1'
+      RAG_BACKEND: mock
+      CI: 'true'
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: ci-local-password
+          MYSQL_DATABASE: zhiheng_ci
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -pci-local-password"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=12
+    steps:
+      - name: 获取代码
+        uses: actions/checkout@v4
+      - name: 配置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: backend/requirements.lock.txt
+      - name: 配置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: 安装后端依赖
+        run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install -r backend/requirements.lock.txt
+      - name: 安装前端依赖
+        run: npm ci --prefix frontend
+      - name: 检查迁移一致性
+        run: .venv/bin/python backend/manage.py makemigrations --check --dry-run
+      - name: 运行后端测试与前端构建
+        run: bash scripts/check.sh
+      - name: 运行 MySQL 集成检查
+        env:
+          DB_ENGINE: mysql
+          MYSQL_HOST: 127.0.0.1
+          MYSQL_PORT: '3306'
+          MYSQL_DATABASE: zhiheng_ci
+          MYSQL_USER: root
+          MYSQL_PASSWORD: ci-local-password
+        run: |
+          .venv/bin/python backend/manage.py migrate --noinput
+          .venv/bin/python scripts/check_mysql.py
+      - name: 安装界面测试浏览器
+        working-directory: frontend
+        run: npx playwright install --with-deps chrome
+      - name: 运行隔离数据库界面测试
+        run: .venv/bin/python scripts/run_e2e.py
+      - name: 保存界面测试失败证据
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: 界面测试失败证据
+          path: |
+            frontend/test-results/
+            frontend/playwright-report/
+          if-no-files-found: ignore
+          retention-days: 7
